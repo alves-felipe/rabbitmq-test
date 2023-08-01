@@ -1,0 +1,21 @@
+version: "3.8"
+
+services:
+  rabbitmq:
+    container_name: rabbitmq
+    image: rabbitmq:3.9-management
+    ports:
+      - "5672:5672"  
+      - "15672:15672"
+
+  node-app:
+    image: node:18
+    container_name: node-app
+    command: "yarn dev"
+    working_dir: /app
+    volumes:
+      - ./:/app 
+    ports:
+      - "3030:3030"
+    depends_on:
+      - rabbitmq
